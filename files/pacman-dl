@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+if pacman -Sy; then
+    PKGS=$(pacman -Qu)
+    NUM_PKGS=$(echo $PKGS | wc -l)
+fi
+
+if ((  $NUM_PKGS > 0 )); then
+    if [[ -e /usr/bin/notify-send  ]]; then
+
+        send-to() {
+            local name busroute
+            name="$1";  shift
+            busroute="/run/user/$(id -u "$name")/bus"  ||  return 1
+            if sudo -u "$name" -- /bin/test -e "$busroute"
+            then
+                sudo -u "$name" \
+                    PATH="$PATH" \
+                    DBUS_SESSION_BUS_ADDRESS="unix:path=$busroute" \
+                    -- \
+                    notify-send "$@"  2>&1 |
+                sed "s/^/$name\t/"
+            else
+                echo -e "$name\tERROR: No such file $busroute" >&2
+                return 1
+            fi
+        }
+
+
+        send-all() {
+            for name in $(who | cut -f1 -d" " | sort -u)
+            do
+                send-to "$name" "$@" &
+            done
+            wait
+        }
+
+        send-all "Packages downloaded" "Packages to install:\n--\n$PKGS"
+
+    fi
+fi

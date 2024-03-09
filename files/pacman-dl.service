@@ -1,0 +1,9 @@
+[Unit]
+Description=periodically download packages from arch mirrors
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/pacman-dl
+
+[Install]
+WantedBy=multi-user.target
