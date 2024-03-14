@@ -1,8 +1,8 @@
 # Maintainer: Sander Danielsen <thelugal+aur gmail com>
 
 pkgname="pacman-dl"
-pkgver="0.3"
-pkgrel="2"
+pkgver="0.4"
+pkgrel="1"
 pkgdesc="Periodically download packages from Arch mirrors"
 arch=("any")
 url="https://github.com/thelugal/pacman-dl"
