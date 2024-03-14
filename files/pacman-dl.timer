@@ -2,10 +2,8 @@
 Description=triggers pacman-dl every 4 to 6 hours.
 
 [Timer]
-OnCalendar=*-00/4:00:00
-RandomizedDelaySec=1h
-AccuracySec=1h
-OnUnitActiveSec=1h
+OnCalendar=00/5:0
+RandomizedDelaySec=60min
 
 [Install]
 WantedBy=timers.target
