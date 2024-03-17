@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
+set -eo pipefail
 
-if pacman -Sy; then
+if pacman -Syuw; then
     PKGS=$(pacman -Qu)
     NUM_PKGS=$(echo $PKGS | wc -l)
 fi
